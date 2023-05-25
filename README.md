@@ -99,7 +99,7 @@ $ docker push quay.io/<your-namespace>/container-security-operator
 3. Change `image` field in `container-security-operator.v1.0.0.clusterserviceversion.yaml` to point to your image
 4. Build and push `CatalogSource` container image
 ```
-$ cd deploy/
+$ cd bundle/
 $ docker build -t quay.io/<your-namespace>/cso-catalog .
 $ docker push quay.io/<your-namespace>/cso-catalog
 ```
@@ -107,9 +107,9 @@ $ docker push quay.io/<your-namespace>/cso-catalog
 6. Create `CatalogSource` in Kubernetes cluster w/ OLM installed
 ```
 # Upstream Kubernetes
-$ kubectl create -n olm -f deploy/cso.catalogsource.yaml
+$ kubectl create -n olm -f bundle/cso.catalogsource.yaml
 # OpenShift
-$ kubectl create -n openshift-marketplace -f deploy/cso.catalogsource.yaml
+$ kubectl create -n openshift-marketplace -f bundle/cso.catalogsource.yaml
 ```
 7. After a few seconds, your Operator package should be available to create a `Subscription` to.
 ```
@@ -117,11 +117,11 @@ $ kubectl get packagemanifest container-security-operator
 ```
 8. Create `OperatorGroup`:
 ```
-$ kubectl create -n <your-namespace> -f ./bundle/quay-operator.operatorgroup.yaml
+$ kubectl create -n <your-namespace> -f ./bundle/cso.operatorgroup.yaml
 ```
-9. Create the `Subscription` to install the Operator:
+9. Create the `Subscription` to install the Operator. Make sure name of the `CatalogSource` is same as source of `Subscription`:
 ```
-$ kubectl create -n <your-namespace> -f ./bundle/quay-operator.subscription.yaml
+$ kubectl create -n <your-namespace> -f ./bundle/cso.subscription.yaml
 ```
 
 ## Examples
