@@ -38,6 +38,13 @@ The same options can be configured from the command line:
 
 This Operator should be deployed using the [Operator Lifecycle Manager (OLM)](https://github.com/operator-framework/operator-lifecycle-manager), which takes care of RBAC permissions, dependency resolution, and automatic upgrades.
 
+The fastest way to get started is by deploying the operator in an OCP cluster using the setup scripts provided in the hack directory:
+
+```
+./hack/build.sh
+./hack/deploy.sh
+```
+
 ### Kubernetes
 
 This Operator is published upstream on [operatorhub.io](https://operatorhub.io/operator/container-security-operator).
@@ -107,6 +114,14 @@ $ kubectl create -n openshift-marketplace -f deploy/cso.catalogsource.yaml
 7. After a few seconds, your Operator package should be available to create a `Subscription` to.
 ```
 $ kubectl get packagemanifest container-security-operator
+```
+8. Create `OperatorGroup`:
+```
+$ kubectl create -n <your-namespace> -f ./bundle/quay-operator.operatorgroup.yaml
+```
+9. Create the `Subscription` to install the Operator:
+```
+$ kubectl create -n <your-namespace> -f ./bundle/quay-operator.subscription.yaml
 ```
 
 ## Examples
